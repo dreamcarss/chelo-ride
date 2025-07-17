@@ -192,50 +192,45 @@ const handleDocumentUpload = (setter, e) => {
     }
   };
 
-  const displayRazorpay = async () => {
-    try {
-      const amountInPaise = Math.round(calculateTotal() * 100);
-      const options = {
-        key: 'rzp_test_T8qwI5HfUqYUsn',
-        amount: amountInPaise.toString(),
-        currency: 'INR',
-        name: 'CheloRide',
-        description: `Vehicle Rental: ${vehicle.name}`,
-        handler: function(response) {
-          handlePaymentSuccess(response);
-        },
-        prefill: {
-          name: user?.user_metadata?.full_name || '',
-          email: user?.email || '',
-          contact: user?.user_metadata?.phone_number || ''
-        },
-        notes: {
-          vehicle_id: vehicle.id,
-          pickup_date: bookingData.pickupDate,
-          return_date: bookingData.returnDate
-        },
-        theme: {
-          color: '#FFCC00'
-        }
-      };
-      const rzp = new window.Razorpay(options);
-      rzp.on('payment.failed', function(response) {
-        toast({
-          title: "Payment Failed",
-          description: "The payment process was unsuccessful. Please try again.",
-          variant: "destructive",
-        });
-      });
-      rzp.open();
-    } catch (error) {
-      console.error("Razorpay error:", error);
+const displayphonepay = async () => {
+  try {
+    const response = await fetch('https://cnjvkaeaedsifidpbfmo.supabase.co/functions/v1/bright-worker', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        amount: calculateTotal(),
+        userId: user.id,
+        orderId: `ORDER_${Date.now()}`
+      })
+    });
+
+    const data = await response.json();
+
+    console.log("PhonePe API Response", data);
+
+    const redirectUrl = data?.data?.instrumentResponse?.redirectInfo?.url;
+
+    if (redirectUrl) {
+      window.location.href = redirectUrl; // Safe redirect
+    } else {
+      console.error("Payment API returned unexpected response", data);
       toast({
-        title: "Payment Error",
-        description: "There was an error initiating the payment. Please try again.",
-        variant: "destructive",
+        title: "Payment Failed",
+        description: data.message || "Unexpected response from payment server.",
+        variant: "destructive"
       });
     }
-  };
+
+  } catch (error) {
+    console.error("PhonePe Payment Error:", error);
+    toast({
+      title: "Payment Error",
+      description: "There was an error initiating the payment. Please try again.",
+      variant: "destructive"
+    });
+  }
+};
+
 
   const handlePaymentSuccess = async (paymentResponse) => {
     setIsLoading(true);
@@ -363,7 +358,7 @@ const handleDocumentUpload = (setter, e) => {
       });
       return;
     }
-    handlePaymentSuccess();
+    displayphonepay();
   };
 
   if (!vehicle || Object.keys(bookingData).length === 0) {
