@@ -98,10 +98,10 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p>&copy; {new Date().getFullYear()} CHELORIDE. All rights reserved.</p>
             <div className="flex space-x-4 mt-4 md:mt-0">
-              <Link to="/conditions" className="hover:text-luxe-yellow transition-colors">
+              <Link to="/privacypolicy" className="hover:text-luxe-yellow transition-colors">
                 Privacy Policy
               </Link>
-              <Link to="/conditions" className="hover:text-luxe-yellow transition-colors">
+              <Link to="/TermsandConditions" className="hover:text-luxe-yellow transition-colors">
                 Terms of Service
               </Link>
             </div>

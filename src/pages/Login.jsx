@@ -23,7 +23,7 @@ const AuthPage = () => {
     };
 
     checkUser();
-  }, []);
+  }, [navigate]);
 
   // Handle Phone Number Login/Signup
   const handleSendOTP = async (e) => {
@@ -35,22 +35,20 @@ const AuthPage = () => {
       const { data, error } = await supabase.auth.signInWithOtp({
         phone: phoneNumber,
         options: {
-          // Add user metadata for signup
-          data: isSignUpMode ? {
-            first_name: name,
-            phone_number: phoneNumber,
-          } : undefined,
+          data: isSignUpMode
+            ? {
+                first_name: name,
+                phone_number: phoneNumber,
+              }
+            : undefined,
         },
       });
 
-      console.log("OTP sent:", data);
-      console.log("error:", error);
       if (error) throw error;
 
       setOtpSent(true);
       setError("");
     } catch (err) {
-      console.log(err);
       setError(err?.message || "Failed to send OTP. Please check your phone number.");
     } finally {
       setIsLoading(false);
@@ -71,24 +69,35 @@ const AuthPage = () => {
 
       if (error) throw error;
 
-      // Redirect after successful verification
       const id = localStorage.getItem('carId');
-      if (id) {
-        window.location.href = `/vehicles/${id}`;
-      } else {
-        window.location.href = "/";
-      }
+      navigate(id ? `/vehicles/${id}` : "/");
     } catch (err) {
-      console.log(err);
       setError("Invalid OTP. Please try again.");
     } finally {
       setIsVerifying(false);
     }
   };
 
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
+    setError("");
 
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/`,
+        },
+      });
 
-  // Reset form when switching modes
+      if (error) throw error;
+    } catch (err) {
+      setError(err.message || "Google login failed");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const toggleMode = () => {
     setIsSignUpMode(!isSignUpMode);
     setOtpSent(false);
@@ -96,7 +105,6 @@ const AuthPage = () => {
     setError("");
   };
 
-  // Resend OTP
   const handleResendOTP = async () => {
     setIsLoading(true);
     setError("");
@@ -117,7 +125,7 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black px-4 pt-20 m-5">
+    <div className="min-h-screen flex items-center justify-center bg-black px-4 pt-20">
       <div className="w-full max-w-md bg-gray-900 p-8 rounded-xl shadow-lg border border-gray-700 text-white">
         <h1 className="text-3xl font-bold text-yellow-400 mb-2 text-center">
           {otpSent 
@@ -142,10 +150,8 @@ const AuthPage = () => {
           </div>
         )}
 
-        {!otpSent ? (
-          // Phone Number Form
+        {/* {!otpSent ? (
           <form onSubmit={handleSendOTP} className="space-y-5 mb-5">
-            {/* Name Input (Only for Signup) */}
             {isSignUpMode && (
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
@@ -159,12 +165,11 @@ const AuthPage = () => {
                   placeholder="Your name"
                   required
                   disabled={isLoading}
-                  className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-200 mb-2"
+                  className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-200"
                 />
               </div>
             )}
 
-            {/* Phone Number Input */}
             <div>
               <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">
                 Phone Number
@@ -177,14 +182,13 @@ const AuthPage = () => {
                 placeholder="+91 123 456 7890"
                 required
                 disabled={isLoading}
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-200 mb-2"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-200"
               />
               <p className="text-xs text-gray-500 mt-1">
                 Include country code (e.g., +91 for India)
               </p>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
@@ -198,9 +202,7 @@ const AuthPage = () => {
             </button>
           </form>
         ) : (
-          // OTP Verification Form
           <form onSubmit={handleVerifyOTP} className="space-y-5 mb-5">
-            {/* OTP Input */}
             <div>
               <label htmlFor="otp" className="block text-sm font-medium text-gray-300 mb-1">
                 Verification Code
@@ -214,11 +216,10 @@ const AuthPage = () => {
                 required
                 disabled={isVerifying}
                 maxLength={6}
-                className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-200 mb-2 text-center text-2xl tracking-widest"
+                className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-200 text-center text-2xl tracking-widest"
               />
             </div>
 
-            {/* Verify Button */}
             <button
               type="submit"
               disabled={isVerifying || otp.length !== 6}
@@ -231,7 +232,6 @@ const AuthPage = () => {
               )}
             </button>
 
-            {/* Resend OTP */}
             <div className="text-center">
               <button
                 type="button"
@@ -243,7 +243,6 @@ const AuthPage = () => {
               </button>
             </div>
 
-            {/* Back to phone input */}
             <div className="text-center">
               <button
                 type="button"
@@ -258,17 +257,30 @@ const AuthPage = () => {
               </button>
             </div>
           </form>
-        )}
+        )} */}
 
         {!otpSent && (
           <>
-            <div className="my-4 flex items-center">
+            {/* <div className="my-4 flex items-center">
               <hr className="flex-grow border-gray-700" />
               <span className="px-2 text-gray-500 text-sm">or</span>
               <hr className="flex-grow border-gray-700" />
-            </div>
+            </div> */}
 
-    
+            {/* Google Login Button */}
+            <button
+              type="button"
+              onClick={handleGoogleLogin}
+              disabled={isLoading}
+              className="w-full flex items-center justify-center gap-3 bg-white text-black hover:bg-gray-100 font-semibold py-3 px-4 rounded-md shadow transition duration-300 mb-4"
+            >
+              <img
+                src="https://www.svgrepo.com/show/475656/google-color.svg"
+                alt="Google logo"
+                className="w-5 h-5"
+              />
+              Continue with Google
+            </button>
 
             {/* Toggle Mode Button */}
             <div className="text-center">

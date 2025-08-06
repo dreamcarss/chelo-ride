@@ -15,7 +15,7 @@ const Profile = () => {
         data: { user },
         error: userError,
       } = await supabase.auth.getUser();
-
+console.log("User data:", user);
       if (userError || !user) {
         navigate("/auth");
         return;
@@ -234,6 +234,10 @@ const Profile = () => {
               <div>
                 <p className="text-gray-400">Email</p>
                 <p className="text-white">{user.email}</p>
+              </div>
+               <div>
+                <p className="text-gray-400">phone</p>
+                <p className="text-white">{user.phone}</p>
               </div>
               <div>
                 <p className="text-gray-400">ID</p>

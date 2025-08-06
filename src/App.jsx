@@ -15,7 +15,9 @@ import Profile from './pages/Profile';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import AdminPanel from './pages/AdminPanel';
-import Conditions from './pages/Conditions';
+import TermsandConditions from './pages/TermsandConditions';
+import Privacypolicy from './pages/Privacypolicy';
+
 import CabBooking from './pages/CabBooking';
 import NotFound from "./pages/NotFound";
 
@@ -48,7 +50,9 @@ const AppRoutes = () => {
         <Route path="Profile" element={<Profile />} />
         <Route path="About" element={<About />} />
         <Route path="Contact" element={<Contact />} />
-        <Route path="conditions" element={<Conditions />} />
+        <Route path="TermsandConditions" element={<TermsandConditions />} />
+        <Route path="Privacypolicy" element={<Privacypolicy />} />
+
         <Route path="cabbooking" element={<CabBooking />} />
         <Route path="Admin" element={<AdminPanel />} />
         <Route path="*" element={<NotFound />} />
