@@ -29,22 +29,41 @@ const PrivacyPolicy = () => {
         <li><strong>Driver and Vehicle Information:</strong> As a customer, you authorize us to access your driver’s record and vehicle history from all applicable authorities (e.g., DMV, RMV, mechanics). This authorization continues as long as you remain a customer. You may withdraw consent at any time by closing your account.</li>
       </ul>
 
-       {/* Refund Policy */}
-      <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4 border-b pb-2">Refund Policy</h2>
-      <p className="mb-4 text-gray-700">
-        At Chelo Ride, customer satisfaction is important to us. Our refund policy is as follows:
-      </p>
-      <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4 mb-6">
-        <li>Refund requests must be made within <strong>7 days</strong> of the original transaction.</li>
-        <li>Refunds are applicable only for services that have not yet been used, initiated, or completed.</li>
-        <li>For eligible transactions, refunds will be processed to the original payment method within <strong>5–10 business days</strong>.</li>
-        <li>No refunds will be provided for promotional or discounted services unless legally required.</li>
-        <li>In case of disputes, our support team will review and respond within <strong>72 hours</strong> of receiving your request.</li>
-      </ul>
-      <p className="mb-6 text-gray-700">
-        To request a refund, please contact our customer support team at 
-      
-      </p>
+{/* Refund Policy */}
+<h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4 border-b pb-2">Refund Policy</h2>
+<p className="mb-4 text-gray-700">
+  At Chelo Ride, customer satisfaction is important to us. Our refund policy is as follows:
+</p>
+
+{/* Eligibility */}
+<h3 className="text-xl font-semibold text-gray-800 mt-6 mb-2">Eligibility</h3>
+<ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
+  <li>Refund requests must be made within <strong>7 days</strong> of the original transaction.</li>
+  <li>Refunds are applicable only for services that have not yet been used, initiated, or completed.</li>
+  <li>No refunds will be provided for promotional or discounted services unless legally required.</li>
+</ul>
+
+{/* Processing & Credit Timeframe */}
+<h3 className="text-xl font-semibold text-gray-800 mt-6 mb-2">Processing &amp; Credit Timeframe</h3>
+<ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
+  <li>Post approval of your refund request, we will process the refund within <strong>3–5 business days</strong>.</li>
+  <li>Once processed, the refund will be credited to your original payment method within <strong>5–10 business days</strong>, depending on your bank or payment provider.</li>
+</ul>
+
+{/* Disputes */}
+<h3 className="text-xl font-semibold text-gray-800 mt-6 mb-2">Disputes</h3>
+<p className="text-gray-700 mb-4">
+  In case of disputes, our support team will review and respond within <strong>72 hours</strong> of receiving your request.
+</p>
+
+{/* How to Request a Refund */}
+<h3 className="text-xl font-semibold text-gray-800 mt-6 mb-2">How to Request a Refund</h3>
+<p className="text-gray-700">
+  Please contact our customer support team at <strong>dreamcarsvizag@gmail.com</strong> to request a refund.
+</p>
+
+<br />
+
 
       {/* Collection and Use of Non-Personal Information */}
       <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4 border-b pb-2">Collection and Use of Non-Personal Information</h2>
