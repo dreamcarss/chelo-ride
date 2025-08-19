@@ -17,6 +17,7 @@ import { useToast } from "@/hooks/use-toast";
 import supabase from "../lib/supabase";
 import LoginModal from "../components/LoginModal";
 import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const VehicleBookingPage = () => {
   const navigate = useNavigate();
@@ -191,38 +192,92 @@ const handleDocumentUpload = (setter, e) => {
       throw error;
     }
   };
+function paymentCallback(response) {
+  if (response === 'USER_CANCEL') {
+    console.log("User cancelled payment.");
+  } else if (response === 'CONCLUDED') {
+    console.log("Payment completed or failed (terminal state).");
+    // Now verify payment status via your backend API
+  }
+}
+
 
 const displayphonepay = async () => {
   try {
-    const response = await fetch('https://cnjvkaeaedsifidpbfmo.supabase.co/functions/v1/bright-worker', {
+    // 1. OAuth Token Request (Production)
+    const requestHeaders = {
+      "Content-Type": "application/x-www-form-urlencoded"
+    };
+
+    const requestBodyJson = {
+      client_version: 1, // Use production client_version from your credentials email if different
+      grant_type: "client_credentials",
+      client_id:process.env.REACT_APP_PHONE_PAY_CLIENT_ID,
+      client_secret: process.env.REACT_APP_PHONE_PAY_CLIENT_SECRET
+    };
+
+    const requestBody = new URLSearchParams(requestBodyJson).toString();
+
+    const tokenOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        amount: calculateTotal(),
-        userId: user.id,
-        orderId: `ORDER_${Date.now()}`
-      })
-    });
+      url: 'https://api.phonepe.com/apis/identity-manager/v1/oauth/token',
+      headers: requestHeaders,
+      data: requestBody
+    };
 
-    const data = await response.json();
+    const tokenResponse = await axios.request(tokenOptions);
+    const accessToken = tokenResponse.data.access_token;
+    console.log("Access Token:", accessToken);
 
-    console.log("PhonePe API Response", data);
+    // 2. Prepare payment request headers and body
+    const paymentHeaders = {
+      "Content-Type": "application/json",
+      "Authorization": `O-Bearer ${accessToken}`
+    };
 
-    const redirectUrl = data?.data?.instrumentResponse?.redirectInfo?.url;
+    const paymentBody = {
+      merchantOrderId: "2",
+      amount: 100,
+      expireAfter: 1200,
+      metaInfo: {
+        udf1: "additional-information-1",
+        udf2: "additional-information-2",
+        udf3: "additional-information-3",
+        udf4: "additional-information-4",
+        udf5: "additional-information-5"
+      },
+      paymentFlow: {
+        type: "PG_CHECKOUT",
+        message: "Payment message used for collect requests",
+        merchantUrls: {
+          redirectUrl: "https://cheloride.com/"
+        }
+      }
+    };
 
-    if (redirectUrl) {
-      window.location.href = redirectUrl; // Safe redirect
-    } else {
-      console.error("Payment API returned unexpected response", data);
-      toast({
-        title: "Payment Failed",
-        description: data.message || "Unexpected response from payment server.",
-        variant: "destructive"
+    const paymentOptions = {
+      method: 'POST',
+      url: 'https://api.phonepe.com/apis/pg/checkout/v2/pay',
+      headers: paymentHeaders,
+      data: paymentBody
+    };
+
+    const paymentResponse = await axios.request(paymentOptions);
+    console.log("Payment Response:", paymentResponse.data);
+
+    const tokenUrl = paymentResponse.data.data.instrumentResponse.redirectInfo.url;
+
+    if (window && window.PhonePeCheckout && window.PhonePeCheckout.transact) {
+      window.PhonePeCheckout.transact({
+        tokenUrl,
+        callback: paymentCallback,
+        type: "IFRAME" // Important for embedding
       });
+    } else {
+      console.error("PhonePeCheckout script not loaded.");
     }
-
   } catch (error) {
-    console.error("PhonePe Payment Error:", error);
+    console.error("PhonePe Payment Error:", error.response ? error.response.data : error.message);
     toast({
       title: "Payment Error",
       description: "There was an error initiating the payment. Please try again.",
@@ -230,6 +285,7 @@ const displayphonepay = async () => {
     });
   }
 };
+
 
 
   const handlePaymentSuccess = async (paymentResponse) => {

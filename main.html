@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Olive & Thyme - Authentic Mediterranean cuisine crafted with passion. Reserve your table or order online today." />
+  <meta property="og:title" content="Olive & Thyme | Mediterranean Dining Experience" />
+  <meta property="og:description" content="Savor handcrafted dishes inspired by the coasts of Greece, Italy, and Morocco." />
+  <meta property="og:image" content="https://example.com/images/hero-dish.jpg" />
+  <meta property="og:url" content="https://oliveandthyme.com" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#FFD54F" />
+
+  <title>Olive & Thyme | Authentic Mediterranean Cuisine</title>
+
+  <!-- TailwindCSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+  <!-- Tailwind Custom Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'golden': '#FFD54F',
+            'deep-red': '#B71C1C',
+            'earthy-brown': '#5D4037',
+            'light-cream': '#FFF8E1',
+          },
+          fontFamily: {
+            'serif': ['Playfair Display', 'serif'],
+            'sans': ['Poppins', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+    }
+    .hover-zoom img {
+      transition: transform 0.5s ease;
+    }
+    .hover-zoom:hover img {
+      transform: scale(1.08);
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .parallax {
+      background-attachment: fixed;
+      background-position: center;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body class="bg-light-cream text-gray-800">
+
+  <!-- Header & Navigation -->
+  <header class="fixed w-full bg-white/95 backdrop-blur-md z-50 shadow-sm">
+    <div class="container mx-auto px-6 py-4">
+      <nav class="flex items-center justify-between">
+        <a href="#" class="text-2xl font-bold text-earthy-brown">Olive & Thyme</a>
+        <ul class="hidden md:flex space-x-8 text-earthy-brown font-medium">
+          <li><a href="#menu" class="hover:text-deep-red transition">Menu</a></li>
+          <li><a href="#about" class="hover:text-deep-red transition">About</a></li>
+          <li><a href="#testimonials" class="hover:text-deep-red transition">Reviews</a></li>
+          <li><a href="#gallery" class="hover:text-deep-red transition">Gallery</a></li>
+          <li><a href="#contact" class="hover:text-deep-red transition">Contact</a></li>
+        </ul>
+        <button id="menuToggle" class="md:hidden text-earthy-brown focus:outline-none">
+          <i class="fas fa-bars text-xl"></i>
+        </button>
+      </nav>
+      <!-- Mobile Menu -->
+      <ul id="mobileMenu" class="hidden md:hidden mt-4 space-y-3 bg-white rounded-lg p-4 shadow-lg">
+        <li><a href="#menu" class="text-earthy-brown hover:text-deep-red block">Menu</a></li>
+        <li><a href="#about" class="text-earthy-brown hover:text-deep-red block">About</a></li>
+        <li><a href="#testimonials" class="text-earthy-brown hover:text-deep-red block">Reviews</a></li>
+        <li><a href="#gallery" class="text-earthy-brown hover:text-deep-red block">Gallery</a></li>
+        <li><a href="#contact" class="text-earthy-brown hover:text-deep-red block">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero relative h-screen flex items-center justify-center text-center text-white">
+    <div class="absolute inset-0 bg-black/50 z-10"></div>
+    <div class="bg-cover bg-center parallax z-0" style="background-image: url('https://source.unsplash.com/random/1600x900/?mediterranean,food');"></div>
+    <div class="container mx-auto px-6 z-20">
+      <h1 class="text-5xl md:text-7xl font-bold mb-4 drop-shadow-lg">Olive & Thyme</h1>
+      <p class="text-xl md:text-2xl mb-8 max-w-2xl mx-auto drop-shadow">
+        Where sun-kissed flavors meet timeless tradition.
+      </p>
+      <a href="#reservation" class="bg-deep-red hover:bg-red-800 text-white px-8 py-4 rounded-full font-semibold text-lg transition transform hover:scale-105 shadow-lg">
+        Reserve a Table
+      </a>
+    </div>
+  </section>
+
+  <!-- Menu Preview -->
+  <section id="menu" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-4xl font-bold text-earthy-brown">Signature Dishes</h2>
+        <p class="text-gray-600 mt-4">Handcrafted with seasonal ingredients and a touch of heritage.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-zoom fade-in">
+          <img src="https://source.unsplash.com/random/600x400/?hummus,mezze" alt="Roasted Beet & Feta Mezze" loading="lazy" class="w-full h-64 object-cover" />
+          <div class="p-6">
+            <h3 class="text-2xl font-semibold text-earthy-brown">Roasted Beet & Feta Mezze</h3>
+            <p class="text-gray-600 mt-2">Whipped feta, roasted beets, citrus, and za'atar on toasted sourdough.</p>
+            <p class="text-deep-red font-bold text-xl mt-4">$16</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-zoom fade-in">
+          <img src="https://source.unsplash.com/random/600x400/?grilled-fish" alt="Grilled Branzino" loading="lazy" class="w-full h-64 object-cover" />
+          <div class="p-6">
+            <h3 class="text-2xl font-semibold text-earthy-brown">Grilled Branzino</h3>
+            <p class="text-gray-600 mt-2">Fresh Mediterranean sea bass with lemon-herb butter and seasonal greens.</p>
+            <p class="text-deep-red font-bold text-xl mt-4">$32</p>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl overflow-hidden shadow-lg hover-zoom fade-in">
+          <img src="https://source.unsplash.com/random/600x400/?lamb,grill" alt="Herb-Crusted Lamb" loading="lazy" class="w-full h-64 object-cover" />
+          <div class="p-6">
+            <h3 class="text-2xl font-semibold text-earthy-brown">Herb-Crusted Lamb Chops</h3>
+            <p class="text-gray-600 mt-2">Rosemary-thyme crust, served with roasted figs and mint yogurt.</p>
+            <p class="text-deep-red font-bold text-xl mt-4">$36</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-20 bg-light-cream">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="fade-in">
+          <h2 class="text-4xl font-bold text-earthy-brown mb-6">Our Story</h2>
+          <p class="text-lg text-gray-700 mb-4">
+            Founded in 2012 by Chef Amir Hassan, <span class="font-semibold text-deep-red">Olive & Thyme</span> began as a tribute to his grandmother’s recipes from the Aegean coast.
+          </p>
+          <p class="text-lg text-gray-700 mb-4">
+            We blend the vibrant flavors of <span class="text-golden font-medium">Greece, Morocco, and Southern Italy</span> with modern techniques and locally sourced produce.
+          </p>
+          <p class="text-lg text-gray-700">
+            Every dish is a celebration of sun, sea, and shared moments around the table.
+          </p>
+          <a href="#reservation" class="inline-block mt-6 bg-deep-red hover:bg-red-800 text-white px-6 py-3 rounded-full font-medium transition">
+            Meet the Chef
+          </a>
+        </div>
+        <div class="fade-in">
+          <img src="https://source.unsplash.com/random/600x500/?chef,mediterranean" alt="Chef Amir Hassan" class="rounded-xl shadow-xl" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section id="testimonials" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-4xl font-bold text-earthy-brown">Guest Experiences</h2>
+        <p class="text-gray-600 mt-4">Rated 4.9/5 from over 1,500 guests</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="bg-light-cream p-8 rounded-xl shadow-md fade-in">
+          <div class="flex text-golden text-lg mb-4">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p class="text-gray-700 italic">“The lamb was so tender, and the atmosphere felt like home. I’ll be back every anniversary.”</p>
+          <p class="font-semibold text-earthy-brown mt-4">— Lila R.</p>
+        </div>
+        <div class="bg-light-cream p-8 rounded-xl shadow-md fade-in">
+          <div class="flex text-golden text-lg mb-4">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star-half-alt"></i>
+          </div>
+          <p class="text-gray-700 italic">“Outstanding mezze platter! The wine pairing suggestion was perfect. A must-visit.”</p>
+          <p class="font-semibold text-earthy-brown mt-4">— Daniel K.</p>
+        </div>
+        <div class="bg-light-cream p-8 rounded-xl shadow-md fade-in">
+          <div class="flex text-golden text-lg mb-4">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+          </div>
+          <p class="text-gray-700 italic">“The chef came out to greet us. That personal touch made the night unforgettable.”</p>
+          <p class="font-semibold text-earthy-brown mt-4">— Priya & Mark T.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section id="gallery" class="py-20 bg-light-cream">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-4xl font-bold text-earthy-brown">Our World</h2>
+        <p class="text-gray-600 mt-4">A glimpse into our kitchen, dining room, and culinary artistry</p>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="rounded-lg overflow-hidden hover-zoom fade-in">
+          <img src="https://source.unsplash.com/random/500x400/?food,plating" alt="Dish Presentation" class="w-full h-60 object-cover" loading="lazy" />
+        </div>
+        <div class="rounded-lg overflow-hidden hover-zoom fade-in">
+          <img src="https://source.unsplash.com/random/500x400/?wine,dinner" alt="Wine Pairing" class="w-full h-60 object-cover" loading="lazy" />
+        </div>
+        <div class="rounded-lg overflow-hidden hover-zoom fade-in">
+          <img src="https://source.unsplash.com/random/500x400/?kitchen,chef" alt="Chef in Action" class="w-full h-60 object-cover" loading="lazy" />
+        </div>
+        <div class="rounded-lg overflow-hidden hover-zoom fade-in">
+          <img src="https://source.unsplash.com/random/500x400/?restaurant,interior" alt="Dining Room" class="w-full h-60 object-cover" loading="lazy" />
+        </div>
+        <div class="rounded-lg overflow-hidden hover-zoom fade-in">
+          <img src="https://source.unsplash.com/random/500x400/?dessert,pastry" alt="Dessert" class="w-full h-60 object-cover" loading="lazy" />
+        </div>
+        <div class="rounded-lg overflow-hidden hover-zoom fade-in">
+          <img src="https://source.unsplash.com/random/500x400/?garden,organic" alt="Organic Garden" class="w-full h-60 object-cover" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="reservation" class="py-24 text-center text-white relative">
+    <div class="absolute inset-0 bg-earthy-brown/90 z-0"></div>
+    <div class="bg-cover bg-center parallax z-0" style="background-image: url('https://source.unsplash.com/random/1600x900/?dining,ambiance');"></div>
+    <div class="container mx-auto px-6 relative z-10">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Taste the Mediterranean?</h2>
+      <p class="text-lg md:text-xl mb-10 max-w-2xl mx-auto opacity-90">
+        Join us for an evening of bold flavors, warm hospitality, and unforgettable moments.
+      </p>
+      <a href="#" class="bg-golden hover:bg-yellow-400 text-earthy-brown px-10 py-4 rounded-full font-semibold text-lg transition transform hover:scale-105 shadow-xl">
+        Reserve Your Table
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" class="bg-earthy-brown text-white py-16">
+    <div class="container mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <!-- Contact Info -->
+        <div class="fade-in">
+          <h3 class="text-2xl font-semibold text-golden mb-5">Contact Us</h3>
+          <p class="flex items-center mb-3"><i class="fas fa-map-marker-alt mr-3"></i> 45 Harbor View Drive, Coastal District</p>
+          <p class="flex items-center mb-3"><i class="fas fa-phone mr-3"></i> (555) 234-5678</p>
+          <p class="flex items-center mb-5"><i class="fas fa-envelope mr-3"></i> hello@oliveandthyme.com</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-white hover:text-golden transition"><i class="fab fa-facebook text-xl"></i></a>
+            <a href="#" class="text-white hover:text-golden transition"><i class="fab fa-instagram text-xl"></i></a>
+            <a href="#" class="text-white hover:text-golden transition"><i class="fab fa-yelp text-xl"></i></a>
+          </div>
+        </div>
+
+        <!-- Hours -->
+        <div class="fade-in">
+          <h3 class="text-2xl font-semibold text-golden mb-5">Opening Hours</h3>
+          <p class="mb-2"><strong>Mon–Thu:</strong> 5:00 PM – 10:00 PM</p>
+          <p class="mb-2"><strong>Fri–Sat:</strong> 5:00 PM – 11:00 PM</p>
+          <p class="mb-2"><strong>Sun:</strong> 4:00 PM – 9:00 PM</p>
+          <p class="mt-4 italic text-golden/80">Brunch: Sat & Sun • 10:00 AM – 2:00 PM</p>
+        </div>
+
+        <!-- Map -->
+        <div class="fade-in">
+          <h3 class="text-2xl font-semibold text-golden mb-5">Find Us</h3>
+          <iframe 
+            class="w-full h-48 rounded-lg border-0 shadow-md"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.2219901290355!2d-74.0033819!3d40.7132207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a23e28c1191%3A0x49f75d3281df052a!2s123%20Oak%20Lane%2C%20New%20York%2C%20NY!5e0!3m2!1sen!2sus!4v1601234567890!5m2!1sen!2sus" 
+            allowfullscreen="" 
+            loading="lazy"
+            title="Google Maps Location"
+            aria-label="Map showing location of Olive & Thyme restaurant">
+          </iframe>
+        </div>
+      </div>
+      <div class="border-t border-earthy-brown/50 mt-10 pt-8 text-center text-gray-300 text-sm">
+        &copy; 2025 Olive & Thyme. All rights reserved. Crafted with <i class="fas fa-heart text-red-500"></i>
+      </div>
+    </div>
+  </footer>
+
+  <!-- script.js -->
+  <script>
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Fade-in on Scroll
+    const faders = document.querySelectorAll('.fade-in');
+    const appearOptions = {
+      threshold: 0.1,
+      rootMargin: "0px 0px -100px 0px"
+    };
+
+    const appearOnScroll = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      });
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    });
+
+    // Smooth Scrolling for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
+          // Close mobile menu
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
