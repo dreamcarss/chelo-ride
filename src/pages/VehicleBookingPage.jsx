@@ -193,6 +193,8 @@ const handleDocumentUpload = (setter, e) => {
     }
   };
 function paymentCallback(response) {
+  console.log(response)
+  console.log(response)
   if (response === 'USER_CANCEL') {
     console.log("User cancelled payment.");
     toast({
