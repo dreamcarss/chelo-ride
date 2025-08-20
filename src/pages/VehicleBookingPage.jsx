@@ -212,13 +212,10 @@ const displayphonepay = async () => {
     const requestBodyJson = {
       client_version: 1, // Use production client_version from your credentials email if different
       grant_type: "client_credentials",
-      client_id:process.env.REACT_APP_PHONE_PAY_CLIENT_ID,
-      client_secret: process.env.REACT_APP_PHONE_PAY_CLIENT_SECRET
+         client_id: import.meta.env.VITE_PHONE_PAY_CLIENT_ID,
+  client_secret: import.meta.env.VITE_PHONE_PAY_CLIENT_SECRET
     };
-    console.log({
-         client_id:process.env.REACT_APP_PHONE_PAY_CLIENT_ID,
-      client_secret: process.env.REACT_APP_PHONE_PAY_CLIENT_SECRET
-    })
+
 
     const requestBody = new URLSearchParams(requestBodyJson).toString();
 
