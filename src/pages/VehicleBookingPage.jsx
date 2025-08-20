@@ -30,6 +30,7 @@ const VehicleBookingPage = () => {
   const [id, setId] = useState();
   const [currentStep, setCurrentStep] = useState(1);
   const [submitLater, setSubmitLater] = useState(false);
+  const [accessToken,setAccessToken] = useState()
 
   // Document States
   const [aadhaarFront, setAadhaarFront] = useState(null);
@@ -219,7 +220,7 @@ const verifyAndCompleteBooking = async () => {
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId }),
+        body: JSON.stringify({ orderId,accessToken }),
       }
     );
 
@@ -366,6 +367,7 @@ const displayphonepay = async () => {
 
     const data = await res.json();
     const tokenUrl = data?.redirectUrl;
+    setAccessToken(data?.accessToken)
     
 
     if (tokenUrl && window.PhonePeCheckout?.transact) {
