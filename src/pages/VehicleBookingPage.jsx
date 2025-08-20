@@ -215,6 +215,10 @@ const displayphonepay = async () => {
       client_id:process.env.REACT_APP_PHONE_PAY_CLIENT_ID,
       client_secret: process.env.REACT_APP_PHONE_PAY_CLIENT_SECRET
     };
+    console.log({
+         client_id:process.env.REACT_APP_PHONE_PAY_CLIENT_ID,
+      client_secret: process.env.REACT_APP_PHONE_PAY_CLIENT_SECRET
+    })
 
     const requestBody = new URLSearchParams(requestBodyJson).toString();
 
