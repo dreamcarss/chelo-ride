@@ -195,11 +195,59 @@ const handleDocumentUpload = (setter, e) => {
 function paymentCallback(response) {
   if (response === 'USER_CANCEL') {
     console.log("User cancelled payment.");
+    toast({
+      title: "Payment Cancelled",
+      description: "The payment was cancelled by the user.",
+      variant: "destructive"
+    });
   } else if (response === 'CONCLUDED') {
     console.log("Payment completed or failed (terminal state).");
-    // Now verify payment status via your backend API
+    verifyAndCompleteBooking();
   }
 }
+
+const verifyAndCompleteBooking = async () => {
+  setIsLoading(true);
+  try {
+    const orderId = localStorage.getItem("currentOrderId"); // Save orderId when starting payment
+
+    // Call your backend to verify payment status
+    const verifyRes = await fetch(
+      "https://cnjvkaeaedsifidpbfmo.supabase.co/functions/v1/swift-responder",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId }),
+      }
+    );
+
+    if (!verifyRes.ok) {
+      const error = await verifyRes.text();
+      throw new Error(`Verification failed: ${error}`);
+    }
+
+    const verifyData = await verifyRes.json();
+    if (!verifyData.success) {
+      throw new Error(verifyData.message || "Payment verification failed");
+    }
+
+    // ✅ Payment verified — now save booking
+    await handlePaymentSuccess({
+      phonepe_transaction_id: verifyData.transactionId,
+      orderId: verifyData.orderId,
+    });
+
+  } catch (error) {
+    console.error("Verification or booking failed:", error);
+    toast({
+      title: "Payment Failed",
+      description: error.message || "Could not verify payment. Please contact support.",
+      variant: "destructive"
+    });
+  } finally {
+    setIsLoading(false);
+  }
+};
 
 
 // const displayphonepay = async () => {
@@ -288,47 +336,51 @@ function paymentCallback(response) {
 // };
 
 
-const displayphonepay = async ()=>{
- try {
-      // Example booking data
-      const amount = 1 // ₹100
-      const orderId = "ORDER_" + Date.now()
+const displayphonepay = async () => {
+  try {
+    const orderId = "ORDER_" + Date.now();
+    const amount = calculateTotal();
 
-      const res = await fetch(
-        "https://cnjvkaeaedsifidpbfmo.supabase.co/functions/v1/bright-api",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ amount, orderId }),
-        }
-      )
+    // 🔽 Store orderId so we can retrieve it later in callback
+    localStorage.setItem("currentOrderId", orderId);
 
-      if (!res.ok) {
-        const errorText = await res.text()
-        console.error("Payment API error:", errorText)
-        alert("Failed to start payment. Please try again.")
-        return
+    const res = await fetch(
+      "https://cnjvkaeaedsifidpbfmo.supabase.co/functions/v1/bright-api",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount, orderId }),
       }
+    );
 
-      const data = await res.json()
-      console.log("PhonePe API response:", data.redirectUrl)
 
-      // ✅ redirect user to PhonePe checkout
-      const tokenUrl = data?.redirectUrl
-    if (window && window.PhonePeCheckout && window.PhonePeCheckout.transact) {
-          window.PhonePeCheckout.transact({
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Payment API error:", errorText);
+      alert("Failed to start payment. Please try again.");
+      return;
+    }
+
+    const data = await res.json();
+    const tokenUrl = data?.redirectUrl;
+    
+
+    if (tokenUrl && window.PhonePeCheckout?.transact) {
+      window.PhonePeCheckout.transact({
         tokenUrl,
         callback: paymentCallback,
-        type: "IFRAME" // Important for embedding
+        type: "IFRAME"
       });
-      } else {
-        alert("No redirect URL found in response")
-      }
-    } catch (err) {
-      console.error("Payment Error:", err)
-      alert("Something went wrong: " + err.message)
+    } else {
+      alert("Payment gateway not loaded. Please try again.");
     }
-}
+  } catch (err) {
+    console.error("Payment Error:", err);
+    alert("Something went wrong: " + err.message);
+  }
+};
+
 
 
   const handlePaymentSuccess = async (paymentResponse) => {
@@ -409,7 +461,7 @@ const displayphonepay = async ()=>{
         dl_front_url: drivingLicenseFrontUrl,
         dl_back_url: drivingLicenseBackUrl,
         work_proof_url: workProofUrl,
-        payment_id: paymentResponse?.razorpay_payment_id || null,
+        payment_id: phonepe_transaction_id || null,
         created_at: new Date().toISOString(),
       };
 
