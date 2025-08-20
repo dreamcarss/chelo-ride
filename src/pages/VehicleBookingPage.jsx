@@ -30,7 +30,6 @@ const VehicleBookingPage = () => {
   const [id, setId] = useState();
   const [currentStep, setCurrentStep] = useState(1);
   const [submitLater, setSubmitLater] = useState(false);
-  const [accessToken,setAccessToken] = useState()
 
   // Document States
   const [aadhaarFront, setAadhaarFront] = useState(null);
@@ -213,6 +212,7 @@ const verifyAndCompleteBooking = async () => {
   setIsLoading(true);
   try {
     const orderId = localStorage.getItem("currentOrderId"); // Save orderId when starting payment
+    const accessToken = localStorage.getItem("accessToken"); // Save orderId when starting payment
 
     // Call your backend to verify payment status
     const verifyRes = await fetch(
@@ -367,8 +367,7 @@ const displayphonepay = async () => {
 
     const data = await res.json();
     const tokenUrl = data?.redirectUrl;
-    setAccessToken(data?.accessToken)
-    
+        localStorage.setItem("accessToken", data?.accessToken);
 
     if (tokenUrl && window.PhonePeCheckout?.transact) {
       window.PhonePeCheckout.transact({
