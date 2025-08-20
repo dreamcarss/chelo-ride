@@ -236,7 +236,8 @@ const verifyAndCompleteBooking = async () => {
 
     // ✅ Payment verified — now save booking
     await handlePaymentSuccess({
-      phonepe_transaction_id: verifyData.transactionId,
+      phonepe_transaction_id: verifyData.paymentDetails?.[0].transactionId,
+      status:verifyData.state,
       orderId: verifyData.orderId,
     });
 
@@ -386,7 +387,7 @@ const displayphonepay = async () => {
 
 
 
-  const handlePaymentSuccess = async (paymentResponse) => {
+  const handlePaymentSuccess = async (phonepe_transaction_id,status, orderId) => {
     setIsLoading(true);
     try {
       let aadhaarFrontUrl = null;
@@ -458,7 +459,7 @@ const displayphonepay = async () => {
         return_date: bookingData.returnDate,
         return_time: bookingData.returnTime,
         totalAmount: calculateTotal(),
-        status: "pending",
+        status: status,
         aadhaar_front_url: aadhaarFrontUrl,
         aadhaar_back_url: aadhaarBackUrl,
         dl_front_url: drivingLicenseFrontUrl,
