@@ -16,9 +16,9 @@ const CabBooking = () => {
   };
 
    const sendSMS = async (to, body) => {
-    const accountSid = process.env.REACT_APP_Account_SID;
-    const authToken = process.env.REACT_APP_Auth_Token;
-    const messagingServiceSid = process.env.REACT_APP_Messaging_Service_SID;
+    const accountSid =  import.meta.env.VITE_Account_SID;
+    const authToken =  import.meta.env.VITE_Auth_Token;
+    const messagingServiceSid =  import.meta.env.VITE_Messaging_Service_SID;
     const url = `https://api.twilio.com/2010-04-01/Accounts/${accountSid}/Messages.json`; 
 
     const formData = new FormData();
