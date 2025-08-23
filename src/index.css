@@ -63,25 +63,76 @@
     @apply text-2xl md:text-3xl;
   }
 
-  /* ✅ Global iOS/Android reset */
-  input,
-  select,
+  /* ✅ Reset for text-like inputs */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  input[type="date"],
+  input[type="time"],
+  input[type="search"],
   textarea,
-  button {
+  select {
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
+    appearance: none !important;
+    border-radius: 0 !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    outline: none !important;
   }
 
-  /* ✅ Remove iOS blue highlight background */
-  input:focus,
-  select:focus,
-  textarea:focus,
-  button:focus {
-    outline: none;
-    box-shadow: none;
+  /* ✅ Styled checkboxes + radios with white border */
+  input[type="checkbox"],
+  input[type="radio"] {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid hsl(var(--foreground)); /* always white */
+    border-radius: 0.25rem;
+    background-color: transparent;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
   }
 
-  /* ✅ Remove iOS date/time picker default icons */
+  input[type="checkbox"]:checked {
+    background-color: hsl(var(--primary)); /* yellow */
+    border-color: hsl(var(--primary));
+  }
+
+  input[type="checkbox"]:checked::after {
+    content: "✔";
+    position: absolute;
+    color: hsl(var(--primary-foreground)); /* black checkmark */
+    font-size: 0.8rem;
+    top: -1px;
+    left: 2px;
+  }
+
+  input[type="radio"] {
+    border-radius: 50%;
+  }
+
+  input[type="radio"]:checked {
+    background-color: hsl(var(--primary)); /* yellow */
+    border-color: hsl(var(--primary));
+  }
+
+  input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 6px;
+    height: 6px;
+    background: hsl(var(--primary-foreground)); /* black dot */
+    border-radius: 50%;
+  }
+
+  /* ✅ Remove iOS calendar/time icons */
   input[type="date"]::-webkit-calendar-picker-indicator,
   input[type="time"]::-webkit-calendar-picker-indicator {
     opacity: 0;
@@ -93,16 +144,14 @@
   select {
     background-color: hsl(var(--input));
     color: hsl(var(--foreground));
-    padding: 0.75rem 2.5rem 0.75rem 0.75rem; /* leave room for arrow */
+    padding: 0.75rem 2.5rem 0.75rem 0.75rem;
     font-size: 1rem;
     border: 1px solid hsl(var(--border));
     border-radius: var(--radius);
-    position: relative;
   }
 
-  /* ✅ Custom dropdown arrow */
   select::-ms-expand {
-    display: none; /* remove arrow in IE */
+    display: none;
   }
 }
 
@@ -123,7 +172,7 @@
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
   }
 
-  /* ✅ Wrapper for select with custom arrow */
+  /* ✅ Wrapper for custom select arrow */
   .select-wrapper {
     @apply relative w-full;
   }
