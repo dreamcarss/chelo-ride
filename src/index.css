@@ -70,10 +70,6 @@
   button {
     -webkit-appearance: none !important;
     -moz-appearance: none !important;
-    appearance: none !important;
-    border-radius: 0 !important;
-    background-image: none !important;
-    box-shadow: none !important;
   }
 
   /* ✅ Remove iOS blue highlight background */

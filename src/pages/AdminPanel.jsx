@@ -297,6 +297,7 @@ const AdminPanel = () => {
         .select('*, cars(*)')
         .gte('created_at', today)
         .order('created_at', { ascending: false });
+      console.log(data)
       if (error) throw error;
       setBookings(data || []);
     } catch (err) {
@@ -425,6 +426,7 @@ const filteredBookings = bookings.filter((booking) => {
     setAuthLoading(true);
     try {
       const { data: { session }, error } = await supabase.auth.getSession();
+
       console.log(session.user.id);
       if (error) {
         console.error('Error fetching session:', error);
