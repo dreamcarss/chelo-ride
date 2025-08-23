@@ -721,7 +721,7 @@ const filteredBookings = bookings.filter((booking) => {
                           <p>Year: {car.year}</p>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-xl font-bold text-luxe-yellow">Rs {car.price}/day</span>
+                          <span className="text-xl font-bold text-luxe-yellow">Rs {car.price}/hr</span>
                           <div className="flex gap-2">
                             <button
                               onClick={() => {
@@ -803,7 +803,7 @@ const filteredBookings = bookings.filter((booking) => {
                       ></textarea>
                       <input
                         type="number"
-                        placeholder="Price per day (rs)"
+                        placeholder="Price per hr (rs)"
                         value={newCar.price}
                         onChange={(e) => setNewCar(p => ({ ...p, price: e.target.value }))}
                         required
