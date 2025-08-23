@@ -211,16 +211,16 @@ function paymentCallback(response) {
 const verifyAndCompleteBooking = async () => {
   setIsLoading(true);
   try {
-    const orderId = localStorage.getItem("currentOrderId"); // Save orderId when starting payment
-    const accessToken = localStorage.getItem("accessToken"); // Save orderId when starting payment
+    const orderId = localStorage.getItem("currentOrderId");
+    const accessToken = localStorage.getItem("accessToken");
 
-    // Call your backend to verify payment status
+    // Step 1: Verify Payment
     const verifyRes = await fetch(
       "https://cnjvkaeaedsifidpbfmo.supabase.co/functions/v1/swift-responder",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId,accessToken }),
+        body: JSON.stringify({ orderId, accessToken }),
       }
     );
 
@@ -231,27 +231,40 @@ const verifyAndCompleteBooking = async () => {
 
     const verifyData = await verifyRes.json();
     if (!verifyData.success) {
-      throw new Error(verifyData.message || "Payment verification failed");
+      // ❌ Payment failed → show toast and stop
+      toast({
+        title: "Payment Failed",
+        description: verifyData.message || "Payment could not be verified.",
+        variant: "destructive",
+      });
+      return; // ⛔ stop here, don't run handlePaymentSuccess
     }
 
-    // ✅ Payment verified — now save booking
+    // ✅ Payment successful → save booking
     await handlePaymentSuccess({
-      phonepe_transaction_id: verifyData.paymentDetails?.[0].transactionId,
-      status:verifyData.state,
+      phonepe_transaction_id: verifyData.paymentDetails?.[0]?.transactionId,
+      status: verifyData.state,
       orderId: verifyData.orderId,
+    });
+
+    toast({
+      title: "Payment Successful 🎉",
+      description: "Your booking has been confirmed.",
+      variant: "success",
     });
 
   } catch (error) {
     console.error("Verification or booking failed:", error);
     toast({
-      title: "Payment Failed",
-      description: error.message || "Could not verify payment. Please contact support.",
-      variant: "destructive"
+      title: "Error",
+      description: error.message || "Something went wrong. Please contact support.",
+      variant: "destructive",
     });
   } finally {
     setIsLoading(false);
   }
 };
+
 
 
 // const displayphonepay = async () => {
