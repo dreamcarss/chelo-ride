@@ -132,13 +132,7 @@
     border-radius: 50%;
   }
 
-  /* ✅ Remove iOS calendar/time icons */
-  input[type="date"]::-webkit-calendar-picker-indicator,
-  input[type="time"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-    display: none;
-    pointer-events: none;
-  }
+
 
   /* ✅ Custom select styling */
   select {

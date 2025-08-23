@@ -825,7 +825,7 @@ const filteredBookings = bookings.filter((booking) => {
                       />
                       <input
                         type="text"
-                        placeholder="Location (e.g., Los Angeles)"
+                        placeholder="Location (e.g., rk beach)"
                         value={newCar.location}
                         onChange={(e) => setNewCar(p => ({ ...p, location: e.target.value }))}
                         className="w-full px-3 py-2 border border-border rounded-lg bg-background focus:ring-2 focus:ring-luxe-yellow focus:border-transparent text-foreground"
