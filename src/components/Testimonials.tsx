@@ -31,7 +31,7 @@ const Testimonials = () => {
       <div className="text-center mb-10">
         <h2 className="text-3xl font-bold text-luxe-white mb-3">What Our Clients Say</h2>
         <p className="text-luxe-gray max-w-2xl mx-auto">
-          Discover why our clients trust us for car rentals, self drive options, and Taxi services in Vizag.
+          Discover why our clients trust us for car rentals, self drive options, and taxi services.
         </p>
       </div>
       

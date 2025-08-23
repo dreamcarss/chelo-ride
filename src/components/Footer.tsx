@@ -15,8 +15,8 @@ const Footer = () => {
               <span className="text-luxe-white">RIDE</span>
             </Link>
             <p className="mt-4 text-luxe-gray">
-              Premium self drive cars in Vizag, Taxi booking services, and car rentals in Visakhapatnam. 
-                From local rides to Vizag to Araku, beach car rental - we've got you covered!
+              Premium self drive cars, taxi booking services, and car rentals. 
+              From local rides to scenic getaways, beach car rental – we've got you covered!
             </p>
             
             <div className="flex mt-6 space-x-4">

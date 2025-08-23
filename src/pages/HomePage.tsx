@@ -4,9 +4,7 @@ import SearchForm from "@/components/SearchForm";
 import FeaturedVehicles from "@/components/FeaturedVehicles";
 import SpecialOffers from "@/components/SpecialOffers";
 import Testimonials from "@/components/Testimonials";
-import { Button } from "react-day-picker";
-import { useNavigate } from "react-router-dom"; // For redirection
-import { url } from "inspector";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -14,8 +12,8 @@ const HomePage = () => {
     {
       id: 1,
       title: "Taxi Booking",
-      subtitle: "Vizag rides",
-      description: "Best Taxi booking in Vizag with professional drivers",
+      subtitle: "City rides",
+      description: "Best Taxi booking with professional drivers",
       image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400&h=300&fit=crop&crop=center",
       icon: <Car className="w-4 h-4" />,
       color: "from-yellow-500 to-orange-500",
@@ -26,8 +24,8 @@ const HomePage = () => {
     {
       id: 2,
       title: "Self Drive Cars",
-      subtitle: "Vizag rentals",
-      description: "Self drive cars in Vizag - drive at your pace",
+      subtitle: "Car rentals",
+      description: "Self drive cars - drive at your pace",
       image: "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400&h=300&fit=crop&crop=center",
       icon: <MapPin className="w-4 h-4" />,
       color: "from-blue-500 to-cyan-500",
@@ -35,7 +33,7 @@ const HomePage = () => {
       popular: true,
       url:'/vehicles'
     },
-  {
+    {
       id: 3,
       title: "Two Wheeler",
       subtitle: "Beat traffic",
@@ -83,19 +81,19 @@ const HomePage = () => {
             <div className="lg:col-span-3 text-center lg:text-left space-y-6">
               <div className="inline-flex items-center gap-2 bg-yellow-400/10 backdrop-blur-sm border border-yellow-400/20 rounded-full px-4 py-2 text-yellow-400 text-sm font-medium">
                 <div className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-                Available 24/7 in Visakhapatnam
+                Available 24/7
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
                 Best Car Rental in
                 <span className="block bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-                  Vizag
+                  Your City
                 </span>
               </h1>
               
               <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-2xl">
-                self drive cars in Vizag, Taxi booking services, and car rentals in Visakhapatnam. 
-                From local rides to Vizag to Araku, beach car rental - we've got you covered!
+                Self drive cars, taxi booking services, and car rentals. 
+                From local rides to outstation trips, beach car rental - we've got you covered!
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">

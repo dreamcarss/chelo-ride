@@ -77,7 +77,7 @@ Pickup Date: ${formData.date}
     <div className="bg-luxe-black text-luxe-white min-h-screen pt-20">
       {/* Header */}
       <div className="text-center mb-16">
-        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Book Taxi in Vizag</h2>
+        <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Book Taxi in your city</h2>
         <p className="text-gray-400 text-xl">Hassle-free taxi service in Visakhapatnam. SUVs & sedans available.</p>
         <p className="text-sm text-gray-500 mt-4 text-center">
           Looking for self-drive cars?{' '}
