@@ -58,15 +58,9 @@ const VehicleBookingPage = () => {
     checkAuthStatus();
     fetchVehicle(loadCarId);
     loadBookingData();
-    loadRazorpay();
   }, [carId, navigate]);
 
-  const loadRazorpay = () => {
-    const script = document.createElement('script');
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js'; 
-    script.async = true;
-    document.body.appendChild(script);
-  };
+ 
 
   const fetchVehicle = async (id) => {
     try {
@@ -842,7 +836,7 @@ Proof of Work
                   <CreditCard className="text-yellow-400 mt-1" size={20} />
                   <div>
                     <p className="font-semibold text-white">Secure Payment</p>
-                    <p>Pay securely using Razorpay. We accept Credit/Debit cards, UPI, NetBanking, and Wallets.</p>
+                    <p>Pay securely using Phonepay. We accept Credit/Debit cards, UPI, NetBanking, and Wallets.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
