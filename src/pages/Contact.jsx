@@ -28,7 +28,7 @@ const Contact = () => {
             <MapPin className="text-yellow-400 mb-4" size={28} />
             <h3 className="text-xl font-semibold mb-2">Location</h3>
             <p className="text-gray-300">
-              102, Botta Nilayam, Lane No. S-3, Sampath Nagar, Srinivasa Nagar, Pothinamallayya Palem, Visakhapatnam, Andhra Pradesh 530041
+               RK Beach Rd, Pandurangapuram, Visakhapatnam, Andhra Pradesh 530002
             </p>
           </div>
         </div>

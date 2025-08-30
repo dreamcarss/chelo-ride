@@ -80,7 +80,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin size={18} className="text-luxe-yellow mr-2 mt-1 flex-shrink-0" />
-                <span className="text-luxe-gray">102, botta nilayam, Lane No. S-3, Sampath Nagar, Srinivasa Nagar, Pothinamallayya Palem, Visakhapatnam, Andhra Pradesh 530041</span>
+                <span className="text-luxe-gray"> RK Beach Rd, Pandurangapuram, Visakhapatnam, Andhra Pradesh 530002</span>
               </li>
               <li className="flex items-center">
                 <Phone size={18} className="text-luxe-yellow mr-2 flex-shrink-0" />
