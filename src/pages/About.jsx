@@ -1,10 +1,12 @@
 import React from 'react';
 import { Clock, DollarSign, Shield, ThumbsUp } from 'lucide-react';
+import { Helmet } from "react-helmet-async";
 
 export default function About() {
   return (
     <div className="min-h-screen bg-luxe-black pt-20 mb-20">
       {/* Hero Section */}
+
       <div className="bg-luxe-black relative overflow-hidden">
         <div className="mx-auto max-w-7xl px-6 py-24 sm:py-32">
           <div className="text-center">
