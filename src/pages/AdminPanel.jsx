@@ -422,33 +422,44 @@ const filteredBookings = bookings.filter((booking) => {
     }
   };
 
-  const checkAuth = async () => {
-    setAuthLoading(true);
-    try {
-      const { data: { session }, error } = await supabase.auth.getSession();
+const checkAuth = async () => {
+  setAuthLoading(true);
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession();
 
-      console.log(session.user.id);
-      if (error) {
-        console.error('Error fetching session:', error);
-        setError('Authentication failed. Please log in again.');
-        return false;
-      }
-      const { data, error: userError } = await supabase
-        .from('adminroal')
-        .select('*')
-        .eq('admin', session.user.id)
-        .single();
-      console.log(data);
-      if (userError || !data) {
-        window.location.href = '/';
-      }
-    } catch (error) {
-      console.error('Error checking authentication:', error);
+    if (error) {
+      console.error('Error fetching session:', error);
       setError('Authentication failed. Please log in again.');
-    } finally {
-      setAuthLoading(false);
+      return false;
     }
-  };
+
+    if (!session || !session.user) {
+      setError('No active session. Please log in again.');
+      window.location.href = '/';
+      return false;
+    }
+
+    console.log(session.user.id);
+
+    const { data, error: userError } = await supabase
+      .from('adminroal') // 👀 typo? maybe should be "adminrole"?
+      .select('*')
+      .eq('admin', session.user.id)
+      .single();
+
+    console.log(data);
+
+    if (userError || !data) {
+      window.location.href = '/';
+    }
+  } catch (error) {
+    console.error('Error checking authentication:', error);
+    setError('Authentication failed. Please log in again.');
+  } finally {
+    setAuthLoading(false);
+  }
+};
+
 
   useEffect(() => {
     checkAuth();
