@@ -261,91 +261,6 @@ const verifyAndCompleteBooking = async () => {
 
 
 
-// const displayphonepay = async () => {
-//   try {
-//     // 1. OAuth Token Request (Production)
-//     const requestHeaders = {
-//       "Content-Type": "application/x-www-form-urlencoded"
-//     };
-
-//     const requestBodyJson = {
-//       client_version: 1, // Use production client_version from your credentials email if different
-//       grant_type: "client_credentials",
-//          client_id: import.meta.env.VITE_PHONE_PAY_CLIENT_ID,
-//   client_secret: import.meta.env.VITE_PHONE_PAY_CLIENT_SECRET
-//     };
-
-
-//     const requestBody = new URLSearchParams(requestBodyJson).toString();
-
-//     const tokenOptions = {
-//       method: 'POST',
-//       url: 'https://api.phonepe.com/apis/identity-manager/v1/oauth/token',
-//       headers: requestHeaders,
-//       data: requestBody
-//     };
-
-//     const tokenResponse = await axios.request(tokenOptions);
-//     const accessToken = tokenResponse.data.access_token;
-//     console.log("Access Token:", accessToken);
-
-//     // 2. Prepare payment request headers and body
-//     const paymentHeaders = {
-//       "Content-Type": "application/json",
-//       "Authorization": `O-Bearer ${accessToken}`
-//     };
-
-//     const paymentBody = {
-//       merchantOrderId: "2",
-//       amount: 100,
-//       expireAfter: 1200,
-//       metaInfo: {
-//         udf1: "additional-information-1",
-//         udf2: "additional-information-2",
-//         udf3: "additional-information-3",
-//         udf4: "additional-information-4",
-//         udf5: "additional-information-5"
-//       },
-//       paymentFlow: {
-//         type: "PG_CHECKOUT",
-//         message: "Payment message used for collect requests",
-//         merchantUrls: {
-//           redirectUrl: "https://cheloride.com/"
-//         }
-//       }
-//     };
-
-//     const paymentOptions = {
-//       method: 'POST',
-//       url: 'https://api.phonepe.com/apis/pg/checkout/v2/pay',
-//       headers: paymentHeaders,
-//       data: paymentBody
-//     };
-
-//     const paymentResponse = await axios.request(paymentOptions);
-//     console.log("Payment Response:", paymentResponse.data);
-
-//     const tokenUrl = paymentResponse.data.data.instrumentResponse.redirectInfo.url;
-
-//     if (window && window.PhonePeCheckout && window.PhonePeCheckout.transact) {
-//       window.PhonePeCheckout.transact({
-//         tokenUrl,
-//         callback: paymentCallback,
-//         type: "IFRAME" // Important for embedding
-//       });
-//     } else {
-//       console.error("PhonePeCheckout script not loaded.");
-//     }
-//   } catch (error) {
-//     console.error("PhonePe Payment Error:", error.response ? error.response.data : error.message);
-//     toast({
-//       title: "Payment Error",
-//       description: "There was an error initiating the payment. Please try again.",
-//       variant: "destructive"
-//     });
-//   }
-// };
-
 
 const displayphonepay = async () => {
   try {
@@ -481,8 +396,8 @@ const displayphonepay = async () => {
 
       // Send SMS notifications
       try {
-        // await sendSMS('+918520800787', 'Your booking confirmed');
-        // await sendSMS('+919070147866', 'New booking confirmed');
+        await sendSMS('+918520800787', 'Your booking confirmed');
+        await sendSMS('+919070147866', 'New booking confirmed');
       } catch (smsError) {
         console.error('SMS sending failed:', smsError);
       }
@@ -802,13 +717,13 @@ const displayphonepay = async () => {
                     className="mt-1 text-yellow-400 focus:ring-yellow-400"
                   />
                   <label htmlFor="terms" className="text-gray-300 text-sm">
-                    I agree to the <a href="/conditions" className="text-yellow-400 hover:underline">Terms & Conditions</a>
+                    I agree to the <a href="/TermsandConditions" className="text-yellow-400 hover:underline">Terms & Conditions</a>
                   </label>
                 </div>
               </div>
 
               <div>
-                <p>
+                {/* <p>
                Please bring the following documents in both Xerox (photocopy) and original hardcopy format at the time of pickup:
 <br />
 Aadhaar Card (Front and Back)
@@ -816,7 +731,7 @@ Aadhaar Card (Front and Back)
 Driving License (Front and Back)
 <br />
 Proof of Work
-                </p>
+                </p> */}
               </div>
                 <Button
                   onClick={handleBookNow}
