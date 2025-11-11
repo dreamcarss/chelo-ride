@@ -671,12 +671,6 @@ const checkAuth = async () => {
                               Rs {parseInt(booking.totalAmount).toFixed(2)}
                             </td>
                           
-                            
-                               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">
-                               <a href={booking.document_front_url || '—'} className='' >Open Front</a>
-                               <br />
-                                <a href={booking.document_back_url || '—'}>Open Back</a>
-                            </td>
                           
                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-foreground">
                                 {booking.payment_id || '—'}
